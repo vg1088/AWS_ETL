@@ -1,0 +1,40 @@
+{
+  "name" : "insurence_etl",
+  "jobMode" : "VISUAL",
+  "description" : "",
+  "role" : "arn:aws:iam::390402541700:role/ETLGLUE",
+  "executionProperty" : {
+    "maxConcurrentRuns" : 1
+  },
+  "command" : {
+    "name" : "glueetl",
+    "scriptLocation" : "s3://retaildata1njeston/Scripts/insurence_etl.py",
+    "pythonVersion" : "3"
+  },
+  "defaultArguments" : {
+    "--enable-metrics" : "true",
+    "--enable-spark-ui" : "true",
+    "--spark-event-logs-path" : "s3://retaildata1njeston/logs/",
+    "--enable-job-insights" : "true",
+    "--enable-observability-metrics" : "true",
+    "--enable-glue-datacatalog" : "true",
+    "--job-bookmark-option" : "job-bookmark-enable",
+    "--job-language" : "python",
+    "--TempDir" : "s3://retaildata1njeston/temporarypath/"
+  },
+  "maxRetries" : 0,
+  "allocatedCapacity" : 2,
+  "timeout" : 60,
+  "maxCapacity" : 2.0,
+  "glueVersion" : "2.0",
+  "numberOfWorkers" : 2,
+  "workerType" : "G.1X",
+  "executionClass" : "STANDARD",
+  "codeGenConfigurationNodes" : "{\"node-1754970419809\":{\"ApplyMapping\":{\"Inputs\":[\"node-1754970409786\"],\"Mapping\":[{\"Dropped\":false,\"FromPath\":[\"age\"],\"FromType\":\"string\",\"ToKey\":\"age\",\"ToType\":\"decimal\"},{\"Dropped\":false,\"FromPath\":[\"sex\"],\"FromType\":\"string\",\"ToKey\":\"sex\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"bmi\"],\"FromType\":\"string\",\"ToKey\":\"bmi\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"children\"],\"FromType\":\"string\",\"ToKey\":\"children\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"smoker\"],\"FromType\":\"string\",\"ToKey\":\"smoker\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"region\"],\"FromType\":\"string\",\"ToKey\":\"region\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"charges\"],\"FromType\":\"string\",\"ToKey\":\"charges\",\"ToType\":\"float\"}],\"Name\":\"Change Schema\"}},\"node-1754972584352\":{\"S3DirectTarget\":{\"AutoDataQuality\":{\"EvaluationContext\":\"EvaluateDataQuality_node1754972283068\",\"IsEnabled\":false},\"Compression\":\"snappy\",\"Format\":\"csv\",\"Inputs\":[\"node-1754972523751\"],\"Name\":\"target\",\"NumberTargetPartitions\":\"0\",\"PartitionKeys\":[],\"Path\":\"s3://retaildata1njeston/OUTPUT/\",\"SchemaChangePolicy\":{\"Database\":\"default\",\"EnableUpdateCatalog\":false,\"Table\":\"droped field\",\"UpdateBehavior\":\"UPDATE_IN_DATABASE\"}}},\"node-1754970409786\":{\"S3CsvSource\":{\"AdditionalOptions\":{\"EnableSamplePath\":false,\"SamplePath\":\"s3://retaildata1njeston/input_data/insurance.csv\"},\"Escaper\":\"\",\"Exclusions\":[],\"Name\":\"Amazon S3\",\"OptimizePerformance\":false,\"OutputSchemas\":[{\"Columns\":[{\"Name\":\"age\",\"Type\":\"string\"},{\"Name\":\"sex\",\"Type\":\"string\"},{\"Name\":\"bmi\",\"Type\":\"string\"},{\"Name\":\"children\",\"Type\":\"string\"},{\"Name\":\"smoker\",\"Type\":\"string\"},{\"Name\":\"region\",\"Type\":\"string\"},{\"Name\":\"charges\",\"Type\":\"string\"}]}],\"Paths\":[\"s3://retaildata1njeston/input_data/insurance.csv\"],\"QuoteChar\":\"quote\",\"Recurse\":true,\"Separator\":\"comma\",\"WithHeader\":true}},\"node-1754972523751\":{\"DropFields\":{\"Inputs\":[\"node-1754970419809\"],\"Name\":\"Drop Fields\",\"Paths\":[[\"bmi\"],[\"children\"]]}}}",
+  "sourceControlDetails" : {
+    "provider" : "GITHUB",
+    "repository" : "AWS_ETL",
+    "branch" : "main",
+    "folder" : "insurence_etl"
+  }
+}
